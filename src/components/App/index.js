@@ -19,14 +19,25 @@ export default class App extends Component {
   }
 
   render() {
+    const { now } = this.state;
     const plauralize = (num, noun) => `${num} ${num === 1 ? noun : noun + 's'}`;
+
+    const counter = date => `${
+      date.diff(now, 'days') > 0 ? plauralize(date.diff(now, 'days'), 'day') : ''
+    } ${
+      moment().endOf('day').diff(moment(), 'hours') > 0 ? plauralize(moment().endOf('day').diff(moment(), 'hours'), 'hour') : ''
+    } ${
+      moment().endOf('day').diff(moment(), 'minutes') % 60 > 0 ? plauralize(moment().endOf('day').diff(moment(), 'minutes') % 60, 'minute') : ''
+    } ${
+      moment().endOf('day').diff(moment(), 'seconds') % 60 > 0 ? plauralize(moment().endOf('day').diff(moment(), 'seconds') % 60, 'second') : ''
+    }`;
+
     const adminDays = [
       moment('2018-04-25'),
       moment('2019-04-24'),
       moment('2020-04-22'),
     ];
 
-    const { now } = this.state;
     const nextAdminDay = adminDays.find(x => now.isBefore(x));
     const nextMothersDay = moment(mothersDay(moment().get('year')));
     const nextVday = moment('2-14', 'MM-DD');
@@ -38,7 +49,7 @@ export default class App extends Component {
       <div>
         <div className='chunk'>
           <div className='timeBlock' style={{ textAlign: 'left'}}>
-            <p>{plauralize(nextVday.diff(now, 'days') + 1, 'day')} until Valentine's Day {nextVday.get('years')}</p>
+            <p>{counter(nextVday)} until Valentine's Day {nextVday.get('years')}</p>
           </div>
           <div className='paulFace'>
             <img
@@ -59,12 +70,12 @@ export default class App extends Component {
             ></img>
           </div>
           <div className='timeBlock' style={{ textAlign: 'right'}}>
-            <p>{plauralize(nextAdminDay.diff(now, 'days') + 1, 'day')} until Administrative Professionals' Day {nextAdminDay.get('years')}</p>
+            <p>{counter(nextAdminDay)} until Administrative Professionals' Day {nextAdminDay.get('years')}</p>
           </div>
         </div>
         <div className='chunk'>
           <div className='timeBlock' style={{ textAlign: 'left'}}>
-            <p>{plauralize(nextMothersDay.diff(now, 'days') + 1, 'day')} until Mother's Day {nextMothersDay.get('years')}</p>
+            <p>{counter(nextMothersDay)} until Mother's Day {nextMothersDay.get('years')}</p>
           </div>
           <div className='paulFace'>
             <img
@@ -76,7 +87,8 @@ export default class App extends Component {
           </div>
         </div>
         <div className='footer'>
-          <img src="stemslogo.png" /> This is the super official urbanstems flower holiday count-er down-er. <img src="stemslogo.png" />
+          <img src="stemslogo.png" /> This is the super official urbanstems flower holiday count-er down-er. <img src="stemslogo.png" /><br />
+          <span style={{fontSize: '0.5em'}}>best viewed at 800px x 600px on Internet Exporer 5</span>
         </div>
       </div>
     )

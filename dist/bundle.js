@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "47165d94fa0553a26a4b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "33876ac3e47754898dc1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -35140,6 +35140,10 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _mothersDay = __webpack_require__(154);
+
+var _mothersDay2 = _interopRequireDefault(_mothersDay);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35169,7 +35173,7 @@ var App = function (_Component) {
 
       this.interval = setInterval(function () {
         return _this2.setState({ now: (0, _moment2.default)() });
-      }, 1);
+      }, 250);
     }
   }, {
     key: 'componentWillUnmount',
@@ -35179,51 +35183,116 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var michelBday = (0, _moment2.default)('10-03', 'MM-DD');
-      var michelBdayYear = (0, _moment2.default)('1998', 'YYYY');
       var now = this.state.now;
 
-      var hasPassed = michelBday.isBefore(now);
-      var age = now.diff(michelBdayYear, 'years');
-      if (now.diff(michelBday, 'days') >= 1) michelBday.add(1, 'year');
-      var todayIsHisBirthday = now.isSame(michelBday, 'day');
+      var plauralize = function plauralize(num, noun) {
+        return num + ' ' + (num === 1 ? noun : noun + 's');
+      };
+
+      var counter = function counter(date) {
+        return (date.diff(now, 'days') > 0 ? plauralize(date.diff(now, 'days'), 'day') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'hours') > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'hours'), 'hour') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'minutes') % 60 > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'minutes') % 60, 'minute') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'seconds') % 60 > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'seconds') % 60, 'second') : '');
+      };
+
+      var adminDays = [(0, _moment2.default)('2018-04-25'), (0, _moment2.default)('2019-04-24'), (0, _moment2.default)('2020-04-22')];
+
+      var nextAdminDay = adminDays.find(function (x) {
+        return now.isBefore(x);
+      });
+      var nextMothersDay = (0, _moment2.default)((0, _mothersDay2.default)((0, _moment2.default)().get('year')));
+      var nextVday = (0, _moment2.default)('2-14', 'MM-DD');
+
+      if (nextVday.isBefore(now)) nextVday.add(1, 'year');
+      if (nextMothersDay.isBefore(now)) nextMothersDay.add(1, 'year');
+
       return _react2.default.createElement(
         'div',
         null,
-        todayIsHisBirthday && _react2.default.createElement(
+        _react2.default.createElement(
           'div',
-          null,
+          { className: 'chunk' },
           _react2.default.createElement(
-            'p',
-            null,
-            'ITS YOUR BIRTHDAY!!!!!!! YOU ARE ',
-            age
+            'div',
+            { className: 'timeBlock', style: { textAlign: 'left' } },
+            _react2.default.createElement(
+              'p',
+              null,
+              counter(nextVday),
+              ' until Valentine\'s Day ',
+              nextVday.get('years')
+            )
           ),
-          _react2.default.createElement('iframe', { width: '560', height: '315', src: 'https://www.youtube.com/embed/WsQO1jOXLeg', frameBorder: '0', allow: 'autoplay; encrypted-media', allowFullScreen: true })
+          _react2.default.createElement(
+            'div',
+            { className: 'paulFace' },
+            _react2.default.createElement('img', {
+              src: 'paulface.png',
+              style: {
+                transform: 'rotate(' + now.get('seconds') / 60 * 360 + 'deg)'
+              }
+            })
+          )
         ),
-        !todayIsHisBirthday && _react2.default.createElement(
+        _react2.default.createElement(
           'div',
-          null,
+          { className: 'chunk' },
           _react2.default.createElement(
-            'p',
-            null,
-            'michels bday is ',
-            michelBday.format('MMM Do')
+            'div',
+            { className: 'paulFace' },
+            _react2.default.createElement('img', {
+              src: 'paulface.png',
+              style: {
+                transform: 'rotate(' + (now.get('seconds') / 60 * 360 + 120) + 'deg)'
+              }
+            })
           ),
           _react2.default.createElement(
-            'p',
-            null,
-            'this year ',
-            hasPassed ? 'he turned' : 'he will be',
-            ' ',
-            age
+            'div',
+            { className: 'timeBlock', style: { textAlign: 'right' } },
+            _react2.default.createElement(
+              'p',
+              null,
+              counter(nextAdminDay),
+              ' until Administrative Professionals\' Day ',
+              nextAdminDay.get('years')
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'chunk' },
+          _react2.default.createElement(
+            'div',
+            { className: 'timeBlock', style: { textAlign: 'left' } },
+            _react2.default.createElement(
+              'p',
+              null,
+              counter(nextMothersDay),
+              ' until Mother\'s Day ',
+              nextMothersDay.get('years')
+            )
           ),
           _react2.default.createElement(
-            'p',
-            null,
-            'countdown to bday: ',
-            michelBday.diff(now, 'milliseconds'),
-            '!!'
+            'div',
+            { className: 'paulFace' },
+            _react2.default.createElement('img', {
+              src: 'paulface.png',
+              style: {
+                transform: 'rotate(' + (now.get('seconds') / 60 * 360 + 240) + 'deg)'
+              }
+            })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'footer' },
+          _react2.default.createElement('img', { src: 'stemslogo.png' }),
+          ' This is the super official urbanstems flower holiday count-er down-er. ',
+          _react2.default.createElement('img', { src: 'stemslogo.png' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'span',
+            { style: { fontSize: '0.5em' } },
+            'best viewed at 800px x 600px on Internet Exporer 5'
           )
         )
       );
@@ -35528,6 +35597,25 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 153;
+
+/***/ }),
+/* 154 */
+/***/ (function(module, exports) {
+
+module.exports = function(year) {
+	var day = 1;
+	var date = new Date(year, 4, day);
+	var check = 0;
+	while (check < 2) {
+		if (date.getDay() === 0) {
+			if (++check >= 2) {
+				break;
+			}
+		}
+		date.setDate(++day);
+	}
+	return date;
+}
 
 /***/ })
 /******/ ]);
