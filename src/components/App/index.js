@@ -22,14 +22,20 @@ export default class App extends Component {
     const { now } = this.state;
     const plauralize = (num, noun) => `${num} ${num === 1 ? noun : noun + 's'}`;
 
+    const unitTilEndOfDayWithMod = unit => {
+      const mod = unit === 'hour' ? Infinity : 60;
+      return moment().endOf('day').diff(moment(), `${unit}s`) % mod > 0
+        ? plauralize(moment().endOf('day').diff(moment(), `${unit}s`) % mod, unit)
+        : '';
+    }
     const counter = date => `${
       date.diff(now, 'days') > 0 ? plauralize(date.diff(now, 'days'), 'day') : ''
     } ${
-      moment().endOf('day').diff(moment(), 'hours') > 0 ? plauralize(moment().endOf('day').diff(moment(), 'hours'), 'hour') : ''
+      unitTilEndOfDayWithMod('hour')
     } ${
-      moment().endOf('day').diff(moment(), 'minutes') % 60 > 0 ? plauralize(moment().endOf('day').diff(moment(), 'minutes') % 60, 'minute') : ''
+      unitTilEndOfDayWithMod('minute')
     } ${
-      moment().endOf('day').diff(moment(), 'seconds') % 60 > 0 ? plauralize(moment().endOf('day').diff(moment(), 'seconds') % 60, 'second') : ''
+      unitTilEndOfDayWithMod('second')
     }`;
 
     const adminDays = [

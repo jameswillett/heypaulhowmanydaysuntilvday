@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "33876ac3e47754898dc1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9f67acb6143094dc1d9f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -35189,8 +35189,12 @@ var App = function (_Component) {
         return num + ' ' + (num === 1 ? noun : noun + 's');
       };
 
+      var unitTilEndOfDayWithMod = function unitTilEndOfDayWithMod(unit) {
+        var mod = unit === 'hour' ? Infinity : 60;
+        return (0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), unit + 's') % mod > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), unit + 's') % mod, unit) : '';
+      };
       var counter = function counter(date) {
-        return (date.diff(now, 'days') > 0 ? plauralize(date.diff(now, 'days'), 'day') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'hours') > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'hours'), 'hour') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'minutes') % 60 > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'minutes') % 60, 'minute') : '') + ' ' + ((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'seconds') % 60 > 0 ? plauralize((0, _moment2.default)().endOf('day').diff((0, _moment2.default)(), 'seconds') % 60, 'second') : '');
+        return (date.diff(now, 'days') > 0 ? plauralize(date.diff(now, 'days'), 'day') : '') + ' ' + unitTilEndOfDayWithMod('hour') + ' ' + unitTilEndOfDayWithMod('minute') + ' ' + unitTilEndOfDayWithMod('second');
       };
 
       var adminDays = [(0, _moment2.default)('2018-04-25'), (0, _moment2.default)('2019-04-24'), (0, _moment2.default)('2020-04-22')];
