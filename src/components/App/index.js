@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import mothersDay from 'mothers-day'
+import mothersDay from 'mothers-day';
 
 export default class App extends Component {
   constructor(props) {
