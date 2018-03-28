@@ -69,7 +69,7 @@ export default class App extends Component {
         <div className='chunk'>
           <div className='paulFace'>
             <img
-              src="paulface.png"
+              src="russ.png"
               style={{
                 transform: `rotate(${(now.get('seconds')/60) * 360 + 120}deg)`
               }}

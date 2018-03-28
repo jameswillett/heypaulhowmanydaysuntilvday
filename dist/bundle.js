@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9f67acb6143094dc1d9f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "56909e092b249ed29e67"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -35207,6 +35207,8 @@ var App = function (_Component) {
 
       if (nextVday.isBefore(now)) nextVday.add(1, 'year');
       if (nextMothersDay.isBefore(now)) nextMothersDay.add(1, 'year');
+
+      console.log(_moment2.default.duration(nextVday.diff(now)).get('minutes'));
 
       return _react2.default.createElement(
         'div',
