@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import mothersDay from 'mothers-day';
+
+const mothersDayForYear = (year) => {
+  const firstOfMay = new Date(year, 4, 1);
+  if (firstOfMay.getDay() === 0) {
+    return moment(firstOfMay).add(7, 'day')
+  }
+  return moment(firstOfMay).add(14 - firstOfMay.getDay(), 'day');
+}
+
+const adminDayForYear = (year) => {
+  const lastOfApril = new Date(year, 3, 30);
+  if (lastOfApril.getDay() === 6) { // if the last day of april is saturday
+    return moment(lastOfApril).subtract(3, 'day') // admin day is 3 days earlier
+  }
+  return moment(lastOfApril).subtract(4 + lastOfApril.getDay(), 'day')
+}
+
 
 export default class App extends Component {
   constructor(props) {
@@ -38,18 +54,16 @@ export default class App extends Component {
       unitTilEndOfDayWithMod('second')
     }`;
 
-    const adminDays = [
-      moment('2018-04-25'),
-      moment('2019-04-24'),
-      moment('2020-04-22'),
-    ];
+    const nextAdminDay = adminDayForYear(moment().get('year')).isBefore(now)
+      ? adminDayForYear(moment().get('year') + 1)
+      : adminDayForYear(moment().get('year'));
 
-    const nextAdminDay = adminDays.find(x => now.isBefore(x));
-    const nextMothersDay = moment(mothersDay(moment().get('year')));
+    const nextMothersDay = mothersDayForYear(moment().get('year')).isBefore(now)
+      ? mothersDayForYear(moment().get('year') + 1)
+      : mothersDayForYear(moment().get('year'));
+
     const nextVday = moment('2-14', 'MM-DD');
-
     if (nextVday.isBefore(now)) nextVday.add(1, 'year');
-    if (nextMothersDay.isBefore(now)) nextMothersDay.add(1, 'year');
 
     return (
       <div>
