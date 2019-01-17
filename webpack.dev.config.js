@@ -24,6 +24,9 @@ module.exports = {
   ],
     extensions: [ '.js', '.jsx' ]
   },
+  resolveLoader: {
+    moduleExtensions: ['-loader']
+  },
   output: {
     path: path.join(__dirname, '/dist'),
     publicPath: '/',
