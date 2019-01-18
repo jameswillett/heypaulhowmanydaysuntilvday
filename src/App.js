@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/alt-text: 0*/
+
 import React, {Component} from 'react';
 import moment from 'moment';
 
